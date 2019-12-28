@@ -33,6 +33,7 @@ import FreeTransform from 'react-free-transform'
     angle={0}
     classPrefix="tr"
     disableScale={false} // scale the content or just the content area
+    aspectRatio={true}    // lock aspect ratio when true
     rotateEnabled={true} // add/remove the rotation handle
     translateEnabled={true} // add/remove dragging
     scaleEnabled={true} // add/remove scaling handles
