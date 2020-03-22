@@ -29,7 +29,7 @@
     "coverage": "codecov"
   },
   "dependencies": {
-    "free-transform": "vidklopcic/free-transform.git",
+    "free-transform": "dorohi/free-transform.git",
     "git": "^0.1.5",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",

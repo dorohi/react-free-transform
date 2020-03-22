@@ -11,12 +11,13 @@ const ScalePoint = ({ onMouseDown, classPrefix, position, styles }) => (
   <div
     className={`${classPrefix}-transform__scale-point ${classPrefix}-transform__scale-point--${position}`}
     onMouseDown={onMouseDown}
+    onTouchStart={onMouseDown}
     style={{
-        position: 'absolute',
-        top: POSITIONING[position[0]],
-        left: POSITIONING[position[1]],
-        transform: 'translate(-50%, -50%)',
-        ...styles
+      position: 'absolute',
+      top: POSITIONING[position[0]],
+      left: POSITIONING[position[1]],
+      transform: 'translate(-50%, -50%)',
+      ...styles
     }} />
 )
 
@@ -27,6 +28,7 @@ ScalePoint.defaultProps = {
 
 ScalePoint.propTypes = {
   onMouseDown: PropTypes.func.isRequired,
+  onTouchStart: PropTypes.func,
   classPrefix: PropTypes.string,
   position: PropTypes.string.isRequired,
   styles: PropTypes.object.isRequired,

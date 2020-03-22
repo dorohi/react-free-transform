@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Rotator = ({ onMouseDown, classPrefix, styles }) => (
+const Rotator = ({ onMouseDown, onTouchStart, classPrefix, styles }) => (
   <div
     className={`${classPrefix}-transform__rotator`}
     onMouseDown={onMouseDown}
+    onTouchStart={onMouseDown}
     style={{
-        position: 'absolute',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        ...styles,
+      position: 'absolute',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      ...styles,
     }} />
 )
 
@@ -20,7 +21,9 @@ Rotator.defaultProps = {
 
 Rotator.propTypes = {
   onMouseDown: PropTypes.func.isRequired,
-  classPrefix: PropTypes.string
+  onTouchStart: PropTypes.func.isRequired,
+  classPrefix: PropTypes.string,
+  styles: PropTypes.object,
 }
 
 export default Rotator
