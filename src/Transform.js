@@ -127,7 +127,8 @@ export default class Transform extends React.Component {
       width: this.props.width,
       height: this.props.height,
       angle: this.props.angle,
-      scaleLimit: this.props.scaleLimit,
+      scaleMinLimit: this.props.scaleMinLimit,
+      scaleMaxLimit: this.props.scaleMaxLimit,
       scaleFromCenter: this.props.scaleFromCenter,
       aspectRatio: this.props.aspectRatio,
     }, this.props.onScale || this.props.onUpdate);
@@ -196,7 +197,8 @@ Transform.SCALE_HANDLE_PRESETS = SCALE_HANDLE_PRESETS;
 
 Transform.defaultProps = {
   classPrefix: "tr",
-  scaleLimit: 0.1,
+  scaleMinLimit: 0.1,
+  scaleMaxLimit: 2,
   disableScale: false,
   scaleX: 1,
   scaleY: 1,
@@ -222,7 +224,8 @@ Transform.propTypes = {
   y: PropTypes.number.isRequired,
   scaleX: PropTypes.number.isRequired,
   scaleY: PropTypes.number.isRequired,
-  scaleLimit: PropTypes.number.isRequired,
+  scaleMinLimit: PropTypes.number.isRequired,
+  scaleMaxLimit: PropTypes.number.isRequired,
   angle: PropTypes.number.isRequired,
   
   onUpdate: PropTypes.func,
