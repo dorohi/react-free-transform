@@ -8,7 +8,7 @@ const SCALE_HANDLE_PRESETS = {
   'corners': ['tl', 'tr', 'bl', 'br'],
   'sides': ['tm', 'mr', 'bm', 'ml'],
   'all': ['tl', 'ml', 'tr', 'tm', 'mr', 'bl', 'bm', 'br'],
-}
+};
 
 export default class Transform extends React.Component {
   
@@ -81,39 +81,46 @@ export default class Transform extends React.Component {
   
   handleTranslation(event) {
     event.stopPropagation();
+    // Если был второй targetTouches, делаем не перенос картинки а скаляцию
+    if (event.targetTouches && event.targetTouches.length >= 2) {
+      event.preventDefault();
+      // повторное нажатие = розтягивание
+      if (event.targetTouches[0].pageX < event.targetTouches[1].pageX){
+        this.handleScale('tl', event)
+      } else {
+        this.handleScale('br', event)
+      }
+    } else {
+      const drag = translate({
+        x: this.props.x,
+        y: this.props.y,
+        startX: event.pageX || event.targetTouches[0].pageX,
+        startY: event.pageY || event.targetTouches[0].pageY,
+      }, this.props.onTranslate || this.props.onUpdate);
+  
+      const up = (event) => {
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('touchmove', drag);
     
-    const drag = translate({
-      x: this.props.x,
-      y: this.props.y,
-      startX: event.pageX || event.targetTouches[0].pageX,
-      startY: event.pageY || event.targetTouches[0].pageY,
-    }, this.props.onTranslate || this.props.onUpdate);
+        document.removeEventListener('mouseup', up);
+        document.removeEventListener('touchend', up);
     
-    const up = (event) => {
-      document.removeEventListener('mousemove', drag);
-      document.removeEventListener('touchmove', drag);
+        let onEnd = this.props.onTranslateEnd || this.props.onTransformEnd;
+        if (onEnd)
+          onEnd(event);
+      };
+  
+      let onStart = this.props.onTranslateStart || this.props.onTransformStart;
+      if (onStart) onStart(event);
       
-      document.removeEventListener('mouseup', up);
-      document.removeEventListener('touchend', up);
-      
-      let onEnd = this.props.onTranslateEnd || this.props.onTransformEnd;
-      if (onEnd)
-        onEnd(event);
-    };
-    
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-    
-    document.addEventListener('mouseup', up);
-    document.addEventListener('touchend', up);
-    
-    let onStart = this.props.onTranslateStart || this.props.onTransformStart;
-    if (onStart)
-      onStart(event);
+      document.addEventListener('touchmove', drag);
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('touchend', up);
+      document.addEventListener('mouseup', up);
+    }
   }
   
   handleScale(scaleType, event) {
-    
     event.stopPropagation();
     
     if (!event.targetTouches) event.preventDefault();
